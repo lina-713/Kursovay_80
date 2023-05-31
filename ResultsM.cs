@@ -41,7 +41,7 @@ namespace Kursovay_80
                     City = Convert.ToString(reader["city"]),
                     Name = Convert.ToString(reader["name"]),
                     DateOfMatch = Convert.ToDateTime(reader["date_of_match"]).ToString("dd/MM/yyyy"),
-                    TimeOfMatch = Convert.ToDateTime(reader["date_of_match"]).ToString("HH:mm:ss"),
+                    TimeOfMatch = Convert.ToDateTime(reader["date_of_match"]).ToString("HH:mm"),
                     Team1Score = Convert.ToInt32(reader["team1_score"]),
                     Team2Score = Convert.ToInt32(reader["team2_score"]),
                     ResultScore = Convert.ToString(reader["resultscore"])
