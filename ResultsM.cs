@@ -61,7 +61,7 @@ namespace Kursovay_80
         private void button3_Click(object sender, EventArgs e)
         {
             int q = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].RowIndex);
-            UpdateMatch updateMatch = new UpdateMatch(connection, q, this);
+            UpdateMatch updateMatch = new UpdateMatch(connection, q + 1, this);
             updateMatch.Show();
         }
 
@@ -86,6 +86,37 @@ namespace Kursovay_80
         private void button4_Click(object sender, EventArgs e)
         {
             FillGrid();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string date = dateTimePicker1.Value.ToString("dd-MM-yyyy");//берем дату которую мы выбрали
+            string betweenDate = (dateTimePicker1.Value.AddDays(1)).ToString("dd-MM-yyyy");//указываем промежуток 
+
+            List<ViewResultsMatch> matches = new List<ViewResultsMatch>();
+            connection.Open();
+            var sql = $"SELECT * FROM match_results where date_of_match between  '{date}' and '{betweenDate}' ";//запрос
+
+            NpgsqlCommand command = new NpgsqlCommand(sql, connection);
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                ViewResultsMatch viewR = new ViewResultsMatch()
+                {
+                    Team1 = Convert.ToString(reader["team1"]),
+                    Team2 = Convert.ToString(reader["team2"]),
+                    City = Convert.ToString(reader["city"]),
+                    Name = Convert.ToString(reader["name"]),
+                    DateOfMatch = Convert.ToDateTime(reader["date_of_match"]).ToString("dd/MM/yyyy"),
+                    TimeOfMatch = Convert.ToDateTime(reader["date_of_match"]).ToString("HH:mm"),
+                    Team1Score = Convert.ToInt32(reader["team1_score"]),
+                    Team2Score = Convert.ToInt32(reader["team2_score"]),
+                    ResultScore = Convert.ToString(reader["resultscore"])
+                };
+                matches.Add(viewR);
+            }
+            dataGridView1.DataSource = matches;
+            connection.Close();
         }
     }
 }

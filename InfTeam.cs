@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -15,11 +16,17 @@ namespace Kursovay_80
     public partial class InfTeam : Form
     {
         private readonly NpgsqlConnection connection;
+        private int ID;
         public InfTeam(NpgsqlConnection npgsqlConnection)
         {
             InitializeComponent();
             connection = npgsqlConnection;
             FillGrid();
+            string str = "SELECT name_team FROM teams ORDER BY idteam ASC ";
+            var teamList = ViewAthletes.ComboboxValue(connection, str);
+            ObservableCollection<TeamsDictionary> dictionaries = new ObservableCollection<TeamsDictionary>();
+            teamList.ForEach(NameTeam => dictionaries.Add(new TeamsDictionary() { IKey = String.Empty, IValue = NameTeam }));
+            comboBox1.DataSource = dictionaries.ToList();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -31,19 +38,21 @@ namespace Kursovay_80
 
         private void button2_Click(object sender, EventArgs e)// изменение 
         {
-            int q = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-            UpdateAthlet updateAthlet = new UpdateAthlet(connection, q, this );
+            string firstName = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+            string name = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
+            UpdateAthlet updateAthlet = new UpdateAthlet(connection, firstName, name, this );
             updateAthlet.Show();
         }
 
         private void button5_Click(object sender, EventArgs e) //Открытие окна для добавления игрока
         {
-            AddNewSportsmen addNewSportsmen = new AddNewSportsmen(connection);
+            AddNewSportsmen addNewSportsmen = new AddNewSportsmen(connection, this);
             addNewSportsmen.Show();
 
         }
         public void FillGrid()// вывод таблицы в datagrid
         {
+            
             List<ViewAthletes> listAthletes = new List<ViewAthletes>();
             List<Teams> teamsList = new List<Teams>();
             connection.Open();
@@ -65,25 +74,54 @@ namespace Kursovay_80
             }
             dataGridView1.DataSource = listAthletes;
             dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[5].Visible = true;
             connection.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)// удаление
         {
-            int q = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-
-            var result = MessageBox.Show("Ты долбаеб?", "Ты реально долбаеб", MessageBoxButtons.YesNo);
+            int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+            var result = MessageBox.Show("Вы действительно хотите удалить данного спортсмена?", "Удаление", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
                 connection.Open();
                 NpgsqlCommand command = new NpgsqlCommand("delete_athlet", connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@new_id", q);
+                command.Parameters.AddWithValue("@new_id", id);
                 command.ExecuteNonQuery();
                 connection.Close();
                 MessageBox.Show("Игрок удален!");
                 FillGrid();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            List<ViewAthletes> listAthletes = new List<ViewAthletes>();
+            connection.Open();
+            string name = comboBox1.SelectedItem.ToString();
+            string str = $"SELECT firstname, name, height, weight, name_team from view_athletes where name_team = all(select name_team FROM teams where name_team = '{name}') ";
+            NpgsqlCommand command = new NpgsqlCommand(str, connection);
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                ViewAthletes athletsinf = new ViewAthletes()
+                {
+                    FirstName = Convert.ToString(reader["firstname"]),
+                    Name = Convert.ToString(reader["name"]),
+                    Height = Convert.ToInt32(reader["height"]),
+                    Weight = Convert.ToInt32(reader["weight"]),
+                };
+                listAthletes.Add(athletsinf);
+            }
+            dataGridView1.DataSource = listAthletes;
+            dataGridView1.Columns[5].Visible = false;
+            connection.Close();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            FillGrid();
         }
     }
 }

@@ -69,6 +69,7 @@ namespace Kursovay_80
     }
     public class ViewStadions
     {
+        public int Id { get; set; }
         [DisplayName("Город")]
         public string City { get; set; }
         [DisplayName("Вместимость")]
@@ -91,7 +92,6 @@ namespace Kursovay_80
         public int Weight { get; set; }
         [DisplayName( "Название команды")]
         public string NameTeam { get; set; }
-
         static public List<string> ComboboxValue(NpgsqlConnection connection, string str)
         {
             connection.Open();

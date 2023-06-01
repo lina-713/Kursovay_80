@@ -15,10 +15,12 @@ namespace Kursovay_80
     public partial class AddNewSportsmen : Form
     {
         private readonly NpgsqlConnection connection;
-        public AddNewSportsmen(NpgsqlConnection npgsqlConnection)
+        private readonly InfTeam athlet;
+        public AddNewSportsmen(NpgsqlConnection npgsqlConnection, InfTeam inf)
         {
             InitializeComponent();
             connection = npgsqlConnection;
+            athlet = inf;
             string str = "SELECT name_team FROM teams ORDER BY idteam ASC ";
             var teamList = ViewAthletes.ComboboxValue(connection, str);
             ObservableCollection<TeamsDictionary> dictionaries = new ObservableCollection<TeamsDictionary>();
@@ -48,6 +50,7 @@ namespace Kursovay_80
             { 
                 connection.Close(); 
             }
+            athlet.FillGrid();
         }
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {

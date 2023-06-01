@@ -15,13 +15,13 @@ namespace Kursovay_80
     public partial class UpdateMatch : Form
     {
         private readonly NpgsqlConnection connection;
-        private int id;
+        private int _id;
         private ResultsM resultsM;
-        public UpdateMatch(NpgsqlConnection npgsqlConnection, int idRow, ResultsM results)
+        public UpdateMatch(NpgsqlConnection npgsqlConnection, int id, ResultsM results)
         {
             InitializeComponent();
             connection = npgsqlConnection;
-            id = idRow;
+            _id = id;
             resultsM = results;
             string str = "SELECT name_team FROM teams ORDER BY idteam ASC ";
             string sql = "SELECT name FROM info_about_location ORDER BY id_stadion ASC";
@@ -36,7 +36,7 @@ namespace Kursovay_80
             comboBox3.DataSource = dictionaries.ToList();
 
             ViewResultsMatch viewResultsMatch = new ViewResultsMatch();
-            str = $"SELECT id_team1, id_team2, date_of_match, team1_score, team2_score, idstadion from match_schedule where id = {id} ";
+            str = $"SELECT id_team1, id_team2, date_of_match, team1_score, team2_score, idstadion from match_schedule where id = {_id} ";
             NpgsqlCommand command = new NpgsqlCommand(str, connection);
             try
             {
@@ -84,5 +84,40 @@ namespace Kursovay_80
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            connection.Open();
+            NpgsqlCommand command = new NpgsqlCommand("update_match", connection);
+            if (comboBox1.SelectedIndex == comboBox2.SelectedIndex)
+            {
+                MessageBox.Show("Команда не может играть против самой себя!");
+                return;
+            }
+            try
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@new_idteam1", comboBox1.SelectedIndex + 1);
+                command.Parameters.AddWithValue("@new_idteam2", comboBox2.SelectedIndex + 1);
+                var d = dateTimePicker1.Value.Date;
+                var t = dateTimePicker2.Value.TimeOfDay;
+                command.Parameters.AddWithValue("@new_date", d + t);
+                command.Parameters.AddWithValue("@new_score1", Convert.ToInt32(textBox1.Text));
+                command.Parameters.AddWithValue("@new_score2", Convert.ToInt32(textBox2.Text));
+                command.Parameters.AddWithValue("@new_idstadion", comboBox3.SelectedIndex + 1);
+                command.Parameters.AddWithValue("@_id", _id);
+                command.ExecuteNonQuery();
+                MessageBox.Show("Матч добавлен!");
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show(exp.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            this.Close();
+        }
     }
 }

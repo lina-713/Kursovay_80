@@ -33,7 +33,6 @@ namespace Kursovay_80
                 textBox2.Text = reader.GetInt32(1).ToString();
                 textBox3.Text = reader.GetString(2);
                 reader.Close();
-
             }
             catch (Exception ex)
             {
@@ -58,6 +57,7 @@ namespace Kursovay_80
                 command.Parameters.AddWithValue("@new_capacity", Convert.ToInt32(textBox2.Text));
                 command.Parameters.AddWithValue("@new_name", textBox3.Text);
                 command.ExecuteNonQuery();
+                MessageBox.Show("Стадион добавлен!");
             }
             catch(Exception ex)
             {
@@ -65,9 +65,8 @@ namespace Kursovay_80
             }
             finally
             {
-                MessageBox.Show("Стадион добавлен!");
+                connection.Close();
             }
-            connection.Close();
             infStadion.FillGrid();
             this.Close();
         }

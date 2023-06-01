@@ -16,35 +16,37 @@ namespace Kursovay_80
     public partial class StadionAdd : Form
     {
         private readonly NpgsqlConnection connection;
-        public StadionAdd(NpgsqlConnection npgsqlConnection)
+        private readonly InfStadion stadion; 
+        public StadionAdd(NpgsqlConnection npgsqlConnection, InfStadion inf )
         {
             InitializeComponent();
             connection = npgsqlConnection;
+            stadion = inf;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             connection.Open();
-            NpgsqlCommand command = new NpgsqlCommand("add_stadion", connection);
+            NpgsqlCommand command = new NpgsqlCommand("add_new_stadion", connection);
             try
             {
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@namestadion", textBox1.Text);
-                command.Parameters.AddWithValue("@citystadion", textBox2.Text);
-                command.Parameters.AddWithValue("@capacitystadion", Convert.ToInt32(textBox3.Text));
+                command.Parameters.AddWithValue("@newname", textBox1.Text);
+                command.Parameters.AddWithValue("@newcity", textBox2.Text);
+                command.Parameters.AddWithValue("@newcapacity", Convert.ToInt32(textBox3.Text));
                 command.ExecuteNonQuery();
+                MessageBox.Show("Стадион добавлен!");
             }
             catch (Exception exc)
             {
-
                 MessageBox.Show(exc.Message);
             }
             finally
             {
-                MessageBox.Show("Стадион добавлен!");
+                connection.Close();
             }
-            connection.Close();
             this.Close();
+            stadion.FillGrid();
         }
 
         private void button2_Click(object sender, EventArgs e)

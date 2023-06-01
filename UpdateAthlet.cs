@@ -17,12 +17,15 @@ namespace Kursovay_80
         private NpgsqlConnection connection;
         private int _id;
         private InfTeam _infTeam;
-        public UpdateAthlet(NpgsqlConnection npgsqlConnection, int id, InfTeam infTeam)
+        private string _name;
+        private string _firstname;
+        public UpdateAthlet(NpgsqlConnection npgsqlConnection, string Fname, string AName, InfTeam infTeam)
         {
             InitializeComponent();
             connection = npgsqlConnection;
             _infTeam = infTeam;
-            _id = id;
+            _firstname = Fname;
+            _name = AName;
             string str = "SELECT name_team FROM teams ORDER BY idteam ASC ";
             var teamList = ViewAthletes.ComboboxValue(connection, str);
             ObservableCollection<TeamsDictionary> dictionaries = new ObservableCollection<TeamsDictionary>();
@@ -30,18 +33,19 @@ namespace Kursovay_80
             comboBox1.DataSource = dictionaries.ToList();
 
             ViewAthletes viewAthletes = new ViewAthletes();
-            str = $"SELECT firstname, name, height, weight, id_team from athletes where id > any(select idteam FROM teams where id = {_id}) ";
+            str = $"SELECT id, firstname, name, height, weight, id_team from athletes where firstname = all(select firstname from athletes where firstname = '{_firstname}' and name = '{_name}')";
             NpgsqlCommand command = new NpgsqlCommand(str,connection);
             try
             {
                 connection.Open();
                 NpgsqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                textBox1.Text = reader.GetString(0);
-                textBox2.Text = reader.GetString(1);
-                textBox3.Text = reader.GetInt32(2).ToString();
-                textBox4.Text = reader.GetInt32(3).ToString();
-                comboBox1.SelectedIndex = reader.GetInt32(4) - 1;
+                _id = reader.GetInt32(0);
+                textBox1.Text = reader.GetString(1);
+                textBox2.Text = reader.GetString(2);
+                textBox3.Text = reader.GetInt32(3).ToString();
+                textBox4.Text = reader.GetInt32(4).ToString();
+                comboBox1.SelectedIndex = reader.GetInt32(5) - 1;
                 reader.Close();
             }
             catch (Exception exp)
@@ -70,6 +74,7 @@ namespace Kursovay_80
                 command.Parameters.AddWithValue("@new_idteam", comboBox1.SelectedIndex + 1);
                 command.Parameters.AddWithValue("@new_id", _id);
                 command.ExecuteNonQuery();
+                MessageBox.Show("Игрок изменен!");
             }
             catch (Exception exp)
             {
@@ -78,9 +83,9 @@ namespace Kursovay_80
             }
             finally
             {
-                MessageBox.Show("Игрок изменен!");
+                connection.Close();
             }
-            connection.Close();
+            
             _infTeam.FillGrid();
             this.Close();
         }

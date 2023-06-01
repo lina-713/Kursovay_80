@@ -68,6 +68,7 @@ values(new_idteam1, new_idteam2, new_date, new_time, new_score1, new_score2, new
             {
                 connection.Close();
             }
+
             this.Close();
         }
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)

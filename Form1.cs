@@ -36,25 +36,14 @@ namespace Kursovay_80
                 case ("admin" + "admin"):
                     str = "Host=localhost;Port=5432;Database=The_information_system_of_the_Russian_Football_Championship;Username=admin;Password=admin";
                     break;
-
-                case ("employee" + "employee"):
-                    str = "Host=localhost;Port=5432;Database=The_information_system_of_the_Russian_Football_Championship;Username=employee;Password=employee";
-                    break;
                 default:
-                    str = null;
-                    break;
+                    MessageBox.Show("Неправильный логин или пароль!");
+                    return;
             }
 
-            if (str == null)
-            {
-                MessageBox.Show("Error!");
-                return;
-            }
             NpgsqlConnection connection = new NpgsqlConnection(str);
             MainWindow mainWindow = new MainWindow(connection);
             mainWindow.Show();
-            
-                
         }
     }
 }
