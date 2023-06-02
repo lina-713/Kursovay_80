@@ -112,6 +112,12 @@
     <Compile Include="AddNewSportsmen.Designer.cs">
       <DependentUpon>AddNewSportsmen.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddTeam.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddTeam.Designer.cs">
+      <DependentUpon>AddTeam.cs</DependentUpon>
+    </Compile>
     <Compile Include="Football_Championship.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -124,6 +130,12 @@
     </Compile>
     <Compile Include="InfStadion.Designer.cs">
       <DependentUpon>InfStadion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InfAthlet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InfAthlet.Designer.cs">
+      <DependentUpon>InfAthlet.cs</DependentUpon>
     </Compile>
     <Compile Include="InfTeam.cs">
       <SubType>Form</SubType>
@@ -169,11 +181,20 @@
     <Compile Include="UpdateStadion.Designer.cs">
       <DependentUpon>UpdateStadion.cs</DependentUpon>
     </Compile>
+    <Compile Include="UpdateTeam.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateTeam.Designer.cs">
+      <DependentUpon>UpdateTeam.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddMatch.resx">
       <DependentUpon>AddMatch.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AddNewSportsmen.resx">
       <DependentUpon>AddNewSportsmen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddTeam.resx">
+      <DependentUpon>AddTeam.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Football_Championship.resx">
       <DependentUpon>Football_Championship.cs</DependentUpon>
@@ -183,6 +204,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InfStadion.resx">
       <DependentUpon>InfStadion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InfAthlet.resx">
+      <DependentUpon>InfAthlet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InfTeam.resx">
       <DependentUpon>InfTeam.cs</DependentUpon>
@@ -213,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UpdateStadion.resx">
       <DependentUpon>UpdateStadion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateTeam.resx">
+      <DependentUpon>UpdateTeam.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

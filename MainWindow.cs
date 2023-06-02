@@ -27,26 +27,29 @@ namespace Kursovay_80
         {
             InfStadion infStadion = new InfStadion(connection, this);
             infStadion.Show();
-            Close();
+            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            InfTeam infTeam = new InfTeam(connection);
+            InfAthlet infTeam = new InfAthlet(connection);
             infTeam.Show();
+            this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             ResultsM resultsM = new ResultsM(connection);
             resultsM.Show();
-            Close();
+            this.Close();
         }
 
 
         private void button5_Click(object sender, EventArgs e)
         {
-            
+            InfTeam infTeam = new InfTeam(connection);
+            infTeam.Show();
+            this.Close();
         }
     }
 }

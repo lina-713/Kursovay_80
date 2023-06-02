@@ -15,8 +15,8 @@ namespace Kursovay_80
     public partial class AddNewSportsmen : Form
     {
         private readonly NpgsqlConnection connection;
-        private readonly InfTeam athlet;
-        public AddNewSportsmen(NpgsqlConnection npgsqlConnection, InfTeam inf)
+        private readonly InfAthlet athlet;
+        public AddNewSportsmen(NpgsqlConnection npgsqlConnection, InfAthlet inf)
         {
             InitializeComponent();
             connection = npgsqlConnection;

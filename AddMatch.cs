@@ -15,10 +15,12 @@ namespace Kursovay_80
     public partial class AddMatch : Form
     {
         private readonly NpgsqlConnection connection;
-        public AddMatch(NpgsqlConnection npgsqlConnection)
+        private readonly ResultsM resultsM;
+        public AddMatch(NpgsqlConnection npgsqlConnection, ResultsM results)
         {
             InitializeComponent();
             connection = npgsqlConnection;
+            resultsM = results;
             string str = "SELECT name_team FROM teams ORDER BY idteam ASC ";
             string sql = "SELECT name FROM info_about_location ORDER BY id_stadion ASC";
             var teamList = ViewAthletes.ComboboxValue(connection, str);
@@ -68,7 +70,7 @@ values(new_idteam1, new_idteam2, new_date, new_time, new_score1, new_score2, new
             {
                 connection.Close();
             }
-
+            resultsM.FillGrid();
             this.Close();
         }
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)

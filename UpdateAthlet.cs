@@ -16,16 +16,13 @@ namespace Kursovay_80
     {
         private NpgsqlConnection connection;
         private int _id;
-        private InfTeam _infTeam;
-        private string _name;
-        private string _firstname;
-        public UpdateAthlet(NpgsqlConnection npgsqlConnection, string Fname, string AName, InfTeam infTeam)
+        private InfAthlet _infTeam;
+        public UpdateAthlet(NpgsqlConnection npgsqlConnection, int id, InfAthlet infTeam)
         {
             InitializeComponent();
             connection = npgsqlConnection;
             _infTeam = infTeam;
-            _firstname = Fname;
-            _name = AName;
+            _id = id;
             string str = "SELECT name_team FROM teams ORDER BY idteam ASC ";
             var teamList = ViewAthletes.ComboboxValue(connection, str);
             ObservableCollection<TeamsDictionary> dictionaries = new ObservableCollection<TeamsDictionary>();
@@ -33,14 +30,13 @@ namespace Kursovay_80
             comboBox1.DataSource = dictionaries.ToList();
 
             ViewAthletes viewAthletes = new ViewAthletes();
-            str = $"SELECT id, firstname, name, height, weight, id_team from athletes where firstname = all(select firstname from athletes where firstname = '{_firstname}' and name = '{_name}')";
+            str = $"SELECT firstname, name, height, weight, id_team from athletes where id = all(select id from athletes where firstname = '{_id}')";
             NpgsqlCommand command = new NpgsqlCommand(str,connection);
             try
             {
                 connection.Open();
                 NpgsqlDataReader reader = command.ExecuteReader();
                 reader.Read();
-                _id = reader.GetInt32(0);
                 textBox1.Text = reader.GetString(1);
                 textBox2.Text = reader.GetString(2);
                 textBox3.Text = reader.GetInt32(3).ToString();
@@ -56,13 +52,11 @@ namespace Kursovay_80
             {
                 connection.Close();
             }
-            
         }
         private void button1_Click(object sender, EventArgs e)
         {
             string str = "update_athlet";
             NpgsqlCommand command = new NpgsqlCommand(str, connection);
-            
             try
             {
                 connection.Open();

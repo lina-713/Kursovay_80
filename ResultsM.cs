@@ -36,6 +36,7 @@ namespace Kursovay_80
             {
                 ViewResultsMatch viewR = new ViewResultsMatch()
                 {
+                    Id = Convert.ToInt32(reader["id"]),
                     Team1 = Convert.ToString(reader["team1"]),
                     Team2 = Convert.ToString(reader["team2"]),
                     City = Convert.ToString(reader["city"]),
@@ -49,27 +50,28 @@ namespace Kursovay_80
                 matches.Add(viewR);
             }
             dataGridView1.DataSource = matches;
+            dataGridView1.Columns[0].Visible = false;
             connection.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AddMatch addMatch = new AddMatch(connection);
+            AddMatch addMatch = new AddMatch(connection, this);
             addMatch.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            int q = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].RowIndex);
-            UpdateMatch updateMatch = new UpdateMatch(connection, q + 1, this);
+            int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
+            UpdateMatch updateMatch = new UpdateMatch(connection, id, this);
             updateMatch.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int q = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].RowIndex);
+            int q = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
 
-            var match = MessageBox.Show("Удаление", "Вы уверены, что хотите удалить этот матч?", MessageBoxButtons.YesNo);
+            var match = MessageBox.Show("Вы уверены, что хотите удалить этот матч?", "Удаление",  MessageBoxButtons.YesNo);
             if(match == DialogResult.Yes)
             {
                 connection.Open();
@@ -91,7 +93,7 @@ namespace Kursovay_80
         private void button6_Click(object sender, EventArgs e)
         {
             string date = dateTimePicker1.Value.ToString("dd-MM-yyyy");//берем дату которую мы выбрали
-            string betweenDate = (dateTimePicker1.Value.AddDays(1)).ToString("dd-MM-yyyy");//указываем промежуток 
+            string betweenDate = dateTimePicker1.Value.AddDays(1).ToString("dd-MM-yyyy");//указываем промежуток 
 
             List<ViewResultsMatch> matches = new List<ViewResultsMatch>();
             connection.Open();

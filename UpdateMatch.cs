@@ -24,13 +24,14 @@ namespace Kursovay_80
             _id = id;
             resultsM = results;
             string str = "SELECT name_team FROM teams ORDER BY idteam ASC ";
-            string sql = "SELECT name FROM info_about_location ORDER BY id_stadion ASC";
             var teamList = ViewAthletes.ComboboxValue(connection, str);
-            var stadionList = ViewAthletes.ComboboxValue(connection, sql);
-            ObservableCollection<TeamsDictionary> dictionaries = new ObservableCollection<TeamsDictionary>();
+            var dictionaries = new ObservableCollection<TeamsDictionary>();
             teamList.ForEach(NameTeam => dictionaries.Add(new TeamsDictionary() { IKey = String.Empty, IValue = NameTeam }));
             comboBox1.DataSource = dictionaries.ToList();
             comboBox2.DataSource = dictionaries.ToList();
+
+            str = "SELECT name FROM info_about_location ORDER BY id_stadion ASC";
+            var stadionList = ViewAthletes.ComboboxValue(connection, str);
             dictionaries = new ObservableCollection<TeamsDictionary>();
             stadionList.ForEach(Name => dictionaries.Add(new TeamsDictionary() { IKey = String.Empty, IValue = Name }));
             comboBox3.DataSource = dictionaries.ToList();
@@ -46,10 +47,9 @@ namespace Kursovay_80
                 comboBox1.SelectedIndex = reader.GetInt32(0) - 1;
                 comboBox2.SelectedIndex = reader.GetInt32(1) - 1;
                 var dy = reader.GetDateTime(2);
-                var t = dy.TimeOfDay;
+                var time = dy.TimeOfDay;
                 dateTimePicker1.Value = dy.Date;
-                dateTimePicker2.CustomFormat = "HH:mm";
-                dateTimePicker2.Value = Convert.ToDateTime(t.ToString());
+                dateTimePicker2.Value = DateTime.Parse(time.ToString("t"));
                 textBox1.Text = reader.GetInt32(3).ToString();
                 textBox2.Text = reader.GetInt32(4).ToString();
                 comboBox3.SelectedIndex = reader.GetInt32(5) - 1;
@@ -65,8 +65,6 @@ namespace Kursovay_80
                 connection.Close();
             }
             connection.Close();
-            resultsM.FillGrid();
-            this.Close();
 
         }
 
@@ -79,11 +77,6 @@ namespace Kursovay_80
                 e.Handled = true;
             }
         }
-        public void da()
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -107,7 +100,7 @@ namespace Kursovay_80
                 command.Parameters.AddWithValue("@new_idstadion", comboBox3.SelectedIndex + 1);
                 command.Parameters.AddWithValue("@_id", _id);
                 command.ExecuteNonQuery();
-                MessageBox.Show("Матч добавлен!");
+                MessageBox.Show("Матч обновлен!");
             }
             catch (Exception exp)
             {
@@ -117,6 +110,7 @@ namespace Kursovay_80
             {
                 connection.Close();
             }
+            resultsM.FillGrid();
             this.Close();
         }
     }

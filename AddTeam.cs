@@ -8,34 +8,33 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Npgsql;
-using NpgsqlTypes;
-
 
 namespace Kursovay_80
 {
-    public partial class StadionAdd : Form
+    public partial class AddTeam : Form
     {
         private readonly NpgsqlConnection connection;
-        private readonly InfStadion stadion; 
-        public StadionAdd(NpgsqlConnection npgsqlConnection, InfStadion inf )
+        private readonly InfTeam team;
+        public AddTeam(NpgsqlConnection npgsqlConnection,InfTeam infTeam )
         {
             InitializeComponent();
             connection = npgsqlConnection;
-            stadion = inf;
+            team = infTeam;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             connection.Open();
-            NpgsqlCommand command = new NpgsqlCommand("add_new_stadion", connection);
+            NpgsqlCommand command = new NpgsqlCommand("add_team", connection);
             try
             {
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@newname", textBox1.Text);
-                command.Parameters.AddWithValue("@newcity", textBox2.Text);
-                command.Parameters.AddWithValue("@newcapacity", Convert.ToInt32(textBox3.Text));
+                command.Parameters.AddWithValue("@new_name_team", textBox1.Text);
+                command.Parameters.AddWithValue("@new_date", dateTimePicker1.Value);
+                command.Parameters.AddWithValue("@new_lastname", textBox2.Text);
+                command.Parameters.AddWithValue("@new_name", textBox3.Text);
                 command.ExecuteNonQuery();
-                MessageBox.Show("Стадион добавлен!");
+                MessageBox.Show("Команда добавлена!");
             }
             catch (Exception exc)
             {
@@ -46,8 +45,7 @@ namespace Kursovay_80
                 connection.Close();
             }
             this.Close();
-            stadion.FillGrid();
+            team.FillGrid();
         }
-
     }
 }

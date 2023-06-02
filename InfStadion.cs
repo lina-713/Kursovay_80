@@ -19,9 +19,7 @@ namespace Kursovay_80
             InitializeComponent();
             connection = npgsqlConnection;
             FillGrid();
-            
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             StadionAdd stadionAdd = new StadionAdd(connection, this);
@@ -31,6 +29,7 @@ namespace Kursovay_80
         {
             MainWindow mainMenu = new MainWindow(connection);
             mainMenu.Show();
+            this.Close();
         }
         private void button3_Click(object sender, EventArgs e)
         {
@@ -38,7 +37,6 @@ namespace Kursovay_80
             UpdateStadion updateStadion = new UpdateStadion(connection, id, this);
             updateStadion.Show();
         }
-
         private void button2_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
@@ -59,13 +57,14 @@ namespace Kursovay_80
         {
             List<ViewStadions> listStadions = new List<ViewStadions>();
             connection.Open();
-            string sql = "select city, capacity, name, count_matches from view_stadion";
+            string sql = "select * from fill_stadion('city','capacity','name')";
             NpgsqlCommand command = new NpgsqlCommand(sql, connection);
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
                 ViewStadions viewStadions = new ViewStadions()
                 {
+                    Id = Convert.ToInt32(reader["id_stadion"]),
                     City = Convert.ToString(reader["city"]),
                     Name = Convert.ToString(reader["name"]),
                     Capacity = Convert.ToInt32(reader["capacity"]),
@@ -73,18 +72,14 @@ namespace Kursovay_80
                 };
                 listStadions.Add(viewStadions);
             }
-
-            
             dataGridView1.DataSource = listStadions;
             dataGridView1.Columns[0].Visible = false;
             connection.Close();
         }
-
         private void InfStadion_Load(object sender, EventArgs e)
         {
 
         }
-
         private void button5_Click(object sender, EventArgs e)
         {
             FillGrid();
