@@ -19,21 +19,19 @@ namespace Kursovay_80
         {
             InitializeComponent();
             connection = npgsqlConnection;
-            Form1 form1 = new Form1();
-            form1.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            InfStadion infStadion = new InfStadion(connection, this);
+            InfStadion infStadion = new InfStadion(connection);
             infStadion.Show();
             this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            InfAthlet infTeam = new InfAthlet(connection);
-            infTeam.Show();
+            InfAthlet infAthlet = new InfAthlet(connection);
+            infAthlet.Show();
             this.Close();
         }
 

@@ -20,6 +20,12 @@ namespace Kursovay_80
             InitializeComponent();
             connection = npgsqlConnection;
             FillGrid();
+            if(connection.UserName== "guest")
+            {
+                button1.Visible = false;
+                button2.Visible = false;
+                button3.Visible = false;
+            }
         }
 
         private void ResultsM_Load(object sender, EventArgs e)
@@ -119,6 +125,13 @@ namespace Kursovay_80
             }
             dataGridView1.DataSource = matches;
             connection.Close();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow(connection);
+            mainWindow.Show();
+            this.Close();
         }
     }
 }

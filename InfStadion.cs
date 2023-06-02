@@ -14,11 +14,17 @@ namespace Kursovay_80
     public partial class InfStadion : Form
     {
         private readonly NpgsqlConnection connection;
-        public InfStadion(NpgsqlConnection npgsqlConnection, MainWindow mainWindow)
+        public InfStadion(NpgsqlConnection npgsqlConnection)
         {
             InitializeComponent();
             connection = npgsqlConnection;
             FillGrid();
+            if (connection.UserName == "guest")
+            {
+                button1.Visible = false;
+                button2.Visible = false;
+                button3.Visible = false;
+            }
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -27,8 +33,8 @@ namespace Kursovay_80
         }
         private void button4_Click(object sender, EventArgs e)
         {
-            MainWindow mainMenu = new MainWindow(connection);
-            mainMenu.Show();
+            MainWindow mainWindow = new MainWindow(connection);
+            mainWindow.Show();
             this.Close();
         }
         private void button3_Click(object sender, EventArgs e)
@@ -57,7 +63,7 @@ namespace Kursovay_80
         {
             List<ViewStadions> listStadions = new List<ViewStadions>();
             connection.Open();
-            string sql = "select * from fill_stadion('city','capacity','name')";
+            string sql = "select * from fill_stadions('id_stadion','city','capacity','name')";
             NpgsqlCommand command = new NpgsqlCommand(sql, connection);
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -65,9 +71,9 @@ namespace Kursovay_80
                 ViewStadions viewStadions = new ViewStadions()
                 {
                     Id = Convert.ToInt32(reader["id_stadion"]),
-                    City = Convert.ToString(reader["city"]),
-                    Name = Convert.ToString(reader["name"]),
+                    City = Convert.ToString(reader["citu"]),                    
                     Capacity = Convert.ToInt32(reader["capacity"]),
+                    Name = Convert.ToString(reader["name"]),
                     CountMatch = Convert.ToInt32(reader["count_matches"])
                 };
                 listStadions.Add(viewStadions);
@@ -83,6 +89,11 @@ namespace Kursovay_80
         private void button5_Click(object sender, EventArgs e)
         {
             FillGrid();
+        }
+
+        private void fileSystemWatcher1_Changed(object sender, System.IO.FileSystemEventArgs e)
+        {
+
         }
     }
 }

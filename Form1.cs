@@ -44,6 +44,7 @@ namespace Kursovay_80
             NpgsqlConnection connection = new NpgsqlConnection(str);
             MainWindow mainWindow = new MainWindow(connection);
             mainWindow.Show();
+            this.Close();
         }
     }
 }

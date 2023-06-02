@@ -22,6 +22,12 @@ namespace Kursovay_80
             InitializeComponent();
             connection = npgsqlConnection;
             FillGrid();
+            if (connection.UserName == "guest")
+            {
+                button2.Visible = false;
+                button3.Visible = false;
+                button5.Visible = false;
+            }
             var str = "SELECT name_team FROM teams ORDER BY idteam ASC ";
             var teamList = ViewAthletes.ComboboxValue(connection, str);
             var dictionaries = new ObservableCollection<TeamsDictionary>();
@@ -31,9 +37,9 @@ namespace Kursovay_80
 
         private void button4_Click(object sender, EventArgs e)
         {
-            this.Close();
             MainWindow mainWindow = new MainWindow(connection);
             mainWindow.Show();
+            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)// изменение 
