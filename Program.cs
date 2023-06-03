@@ -20,9 +20,9 @@ namespace Kursovay_80
             Form1 form1 = new Form1();
             Application.Run(form1);
 
-            NpgsqlConnection connection = form1.connection;
-            form1.Dispose();
-            Application.Run(new MainWindow(connection));
+            //NpgsqlConnection connection = form1.connection;
+            //form1.Dispose();
+            //Application.Run(new MainWindow(connection));
         }
     }
 }

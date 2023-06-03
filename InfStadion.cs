@@ -18,8 +18,9 @@ namespace Kursovay_80
         {
             InitializeComponent();
             connection = npgsqlConnection;
+            var n = npgsqlConnection.UserName;
             FillGrid();
-            if (connection.UserName == "guest")
+            if (n == "guest")
             {
                 button1.Visible = false;
                 button2.Visible = false;

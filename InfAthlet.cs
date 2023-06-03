@@ -16,13 +16,13 @@ namespace Kursovay_80
     public partial class InfAthlet : Form
     {
         private readonly NpgsqlConnection connection;
-        private int ID;
         public InfAthlet(NpgsqlConnection npgsqlConnection)
         {
             InitializeComponent();
             connection = npgsqlConnection;
+            var n = npgsqlConnection.UserName;
             FillGrid();
-            if (connection.UserName == "guest")
+            if (n == "guest")
             {
                 button2.Visible = false;
                 button3.Visible = false;
