@@ -1,4 +1,3 @@
-begin
 CREATE OR REPLACE PROCEDURE public.add_new_athlet(
 	IN newfirstname text,
 	IN newname text,
@@ -47,6 +46,3 @@ VALUES (newcity, newname, newcapacity);
 $BODY$;
 ALTER PROCEDURE public.add_new_stadion(text, text, integer)
     OWNER TO postgres;
-
-COMMIT;
-end;

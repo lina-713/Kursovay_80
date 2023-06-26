@@ -1,4 +1,3 @@
-BEGIN
 CREATE OR REPLACE PROCEDURE public.update_athlet(
 	IN new_firstname text,
 	IN new_name text,
@@ -74,5 +73,3 @@ set name_team = up_name_team,
 $BODY$;
 ALTER PROCEDURE public.update_teams(text, timestamp without time zone, text, text, integer)
     OWNER TO postgres;
-COMMINT;
-END;

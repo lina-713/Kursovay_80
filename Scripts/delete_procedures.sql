@@ -1,4 +1,4 @@
-BEGIN
+
 CREATE OR REPLACE PROCEDURE public.delete_athlet(
 	IN new_id integer)
 LANGUAGE 'sql'
@@ -35,5 +35,3 @@ delete from teams where teams.idteam = delete_id
 $BODY$;
 ALTER PROCEDURE public.delete_teams(integer)
     OWNER TO postgres;
-COMMINT;
-END;
