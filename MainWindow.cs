@@ -20,7 +20,6 @@ namespace Kursovay_80
             InitializeComponent();
             connection = npgsqlConnection;
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             InfStadion infStadion = new InfStadion(connection);

@@ -20,11 +20,7 @@ namespace Kursovay_80
         {
             InitializeComponent();
         }
-        public void Form(string i)
-        {
-            this.Close();
-        }
-        
+      
         private void button1_Click(object sender, EventArgs e)
         {
             string str;
@@ -48,7 +44,6 @@ namespace Kursovay_80
             NpgsqlConnection connection = new NpgsqlConnection(str);
             MainWindow mainWindow = new MainWindow(connection);
             mainWindow.Show();
-
         }
     }
 }
