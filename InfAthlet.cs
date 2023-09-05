@@ -1,15 +1,10 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Npgsql;
-using NpgsqlTypes;
 
 namespace Kursovay_80
 {
@@ -37,23 +32,20 @@ namespace Kursovay_80
 
         private void button4_Click(object sender, EventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(connection);
-            mainWindow.Show();
             this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)// изменение 
         {
             int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-            UpdateAthlet updateAthlet = new UpdateAthlet(connection, id, this );
+            AddNewSportsmen updateAthlet = new AddNewSportsmen(connection, this, id);
             updateAthlet.Show();
         }
 
         private void button5_Click(object sender, EventArgs e) //Открытие окна для добавления игрока
         {
-            AddNewSportsmen addNewSportsmen = new AddNewSportsmen(connection, this);
+            AddNewSportsmen addNewSportsmen = new AddNewSportsmen(connection, this, null);
             addNewSportsmen.Show();
-
         }
         public void FillGrid()// вывод таблицы в datagrid
         {

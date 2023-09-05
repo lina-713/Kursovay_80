@@ -19,6 +19,8 @@ namespace Kursovay_80
             Application.SetCompatibleTextRenderingDefault(false);
             Form1 form1 = new Form1();
             Application.Run(form1);
+            MainWindow mainWindow = new MainWindow(form1.connection);
+            Application.Run(mainWindow);
 
             //NpgsqlConnection connection = form1.connection;
             //form1.Dispose();

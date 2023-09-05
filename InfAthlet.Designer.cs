@@ -79,7 +79,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(133, 40);
             this.button4.TabIndex = 5;
-            this.button4.Text = "Главное меню";
+            this.button4.Text = "Закрыть";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -124,7 +124,7 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // InfTeam
+            // InfAthlet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -137,7 +137,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
-            this.Name = "InfTeam";
+            this.Name = "InfAthlet";
             this.Text = "Информация о команде";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

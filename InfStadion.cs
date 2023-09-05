@@ -1,13 +1,8 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Npgsql;
 
 namespace Kursovay_80
 {
@@ -29,26 +24,24 @@ namespace Kursovay_80
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            StadionAdd stadionAdd = new StadionAdd(connection, this);
+            AddStadion stadionAdd = new AddStadion(connection, this, null);
             stadionAdd.Show();
         }
         private void button4_Click(object sender, EventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(connection);
-            mainWindow.Show();
             this.Close();
         }
         private void button3_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-            UpdateStadion updateStadion = new UpdateStadion(connection, id, this);
+            AddStadion updateStadion = new AddStadion(connection, this, id);
             updateStadion.Show();
         }
         private void button2_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
             var stadionDelete = MessageBox.Show("Вы уверены, что хотите удалить этот стадион?", "Удаление стадиона", MessageBoxButtons.YesNo);
-            if(stadionDelete == DialogResult.Yes)
+            if (stadionDelete == DialogResult.Yes)
             {
                 connection.Open();
                 NpgsqlCommand command = new NpgsqlCommand("delete_stadion", connection);

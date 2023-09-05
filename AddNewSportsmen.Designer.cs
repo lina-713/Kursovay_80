@@ -48,7 +48,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(143, 48);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Добавить";
+            this.button1.Text = "Сохранить";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -62,18 +62,19 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(142, 169);
+            this.textBox2.Location = new System.Drawing.Point(142, 125);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(143, 20);
             this.textBox2.TabIndex = 2;
+            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(142, 122);
+            this.textBox3.Location = new System.Drawing.Point(142, 169);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(143, 20);
             this.textBox3.TabIndex = 3;
-            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
             // textBox4
             // 
@@ -81,6 +82,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(143, 20);
             this.textBox4.TabIndex = 4;
+            this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
             // comboBox1
             // 

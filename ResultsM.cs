@@ -1,14 +1,8 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Npgsql;
-using NpgsqlTypes;
 
 namespace Kursovay_80
 {
@@ -62,14 +56,14 @@ namespace Kursovay_80
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AddMatch addMatch = new AddMatch(connection, this);
+            AddMatch addMatch = new AddMatch(connection, this, null);
             addMatch.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             int id = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value);
-            UpdateMatch updateMatch = new UpdateMatch(connection, id, this);
+            AddMatch updateMatch = new AddMatch(connection, this, id);
             updateMatch.Show();
         }
 
@@ -129,8 +123,6 @@ namespace Kursovay_80
 
         private void button5_Click(object sender, EventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(connection);
-            mainWindow.Show();
             this.Close();
         }
     }

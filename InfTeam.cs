@@ -1,13 +1,8 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Npgsql;
 
 namespace Kursovay_80
 {
@@ -29,7 +24,7 @@ namespace Kursovay_80
 
         private void button1_Click(object sender, EventArgs e)
         {
-            AddTeam addTeam = new AddTeam(connection, this);
+            AddTeam addTeam = new AddTeam(connection, this, null);
             addTeam.Show();
         }
 
@@ -62,8 +57,8 @@ namespace Kursovay_80
 
         private void button3_Click(object sender, EventArgs e)
         {
-            int id = Int32.Parse(dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
-            UpdateTeam updateTeam = new UpdateTeam(connection, this, id);
+            int? id = Int32.Parse(dataGridView1.SelectedRows[0].Cells[0].Value.ToString());
+            AddTeam updateTeam = new AddTeam(connection, this, id);
             updateTeam.Show();
         }
 
@@ -96,8 +91,6 @@ namespace Kursovay_80
 
         private void button4_Click(object sender, EventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(connection);
-            mainWindow.Show();
             this.Close();
         }
     }

@@ -118,13 +118,16 @@
     <Compile Include="AddTeam.Designer.cs">
       <DependentUpon>AddTeam.cs</DependentUpon>
     </Compile>
-    <Compile Include="Football_Championship.cs" />
+    <Compile Include="Models\Athletes.cs" />
+    <Compile Include="Models\ComboBoxIteams.cs" />
+    <Compile Include="Models\TeamsDictionary.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\InfoaboutLocation.cs" />
     <Compile Include="InfStadion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +152,12 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\MatchSchedule.cs" />
+    <Compile Include="Models\Teams.cs" />
+    <Compile Include="Models\ViewAthletes.cs" />
+    <Compile Include="Models\ViewResultsMatch.cs" />
+    <Compile Include="Models\ViewStadions.cs" />
+    <Compile Include="Models\ViewTeams.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultsM.cs">
@@ -157,35 +166,17 @@
     <Compile Include="ResultsM.Designer.cs">
       <DependentUpon>ResultsM.cs</DependentUpon>
     </Compile>
-    <Compile Include="StadionAdd.cs">
+    <Compile Include="AddStadion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StadionAdd.Designer.cs">
-      <DependentUpon>StadionAdd.cs</DependentUpon>
+    <Compile Include="AddStadion.Designer.cs">
+      <DependentUpon>AddStadion.cs</DependentUpon>
     </Compile>
     <Compile Include="UpdateAthlet.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UpdateAthlet.Designer.cs">
       <DependentUpon>UpdateAthlet.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UpdateMatch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UpdateMatch.Designer.cs">
-      <DependentUpon>UpdateMatch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UpdateStadion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UpdateStadion.Designer.cs">
-      <DependentUpon>UpdateStadion.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UpdateTeam.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UpdateTeam.Designer.cs">
-      <DependentUpon>UpdateTeam.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AddMatch.resx">
       <DependentUpon>AddMatch.cs</DependentUpon>
@@ -196,8 +187,8 @@
     <EmbeddedResource Include="AddTeam.resx">
       <DependentUpon>AddTeam.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Football_Championship.resx">
-      <DependentUpon>Football_Championship.cs</DependentUpon>
+    <EmbeddedResource Include="Models\TeamsDictionary.resx">
+      <DependentUpon>TeamsDictionary.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -226,20 +217,11 @@
     <EmbeddedResource Include="ResultsM.resx">
       <DependentUpon>ResultsM.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StadionAdd.resx">
-      <DependentUpon>StadionAdd.cs</DependentUpon>
+    <EmbeddedResource Include="AddStadion.resx">
+      <DependentUpon>AddStadion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpdateAthlet.resx">
       <DependentUpon>UpdateAthlet.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateMatch.resx">
-      <DependentUpon>UpdateMatch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateStadion.resx">
-      <DependentUpon>UpdateStadion.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UpdateTeam.resx">
-      <DependentUpon>UpdateTeam.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
