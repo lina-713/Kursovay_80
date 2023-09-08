@@ -1,0 +1,95 @@
+
+CREATE OR REPLACE function public.add_new_athlet_view(oldTable view_athletes, newTable view_athletes)
+RETURNS VOID AS $$
+	BEGIN
+	insert into athletes(firstname, name, height, weight, id_team) 
+		values (newTable.firstname, newTable.name, newTable.height, newTable.weight, newTable.id_team);
+	end;
+$$ 
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE function public.update_athlet_view(oldTable view_athletes, newTable view_athletes)
+RETURNS VOID AS $$
+	BEGIN
+	UPDATE athletes 
+		SET	firstname = newTable.firstname,
+			name = newTable.name,
+			height = newTable.height,
+			weight = newTable.weight,
+			id_team = (select idteam from teams where name_team = newTable.name_team)
+		where id = newTable.id;
+	end;
+$$ 
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE function public.delete_view_athletes(oldTable view_athletes)
+RETURNS VOID AS 
+$$
+	BEGIN
+		delete from view_athletes where view_athletes.id = oldTable.id;
+	END;
+$$
+LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE RULE update_athletes_list AS
+    ON UPDATE TO public.view_athletes
+    DO INSTEAD
+	(select update_athlet_view(old.*, new.*));
+
+CREATE OR REPLACE function public.update_match_view(oldTable match_results, newTable match_results)
+RETURNS VOID AS 
+$$
+	BEGIN
+		update match_schedule 
+			set 
+				id_team1 = (select idteam from teams where name_team = newTable.id_team1), 
+				id_team2 = (select idteam from teams where name_team = newTable.id_team2), 
+				date_of_match = newTable.date_of_match , 
+				team1_score = newTable.team1_score , 
+				team2_score = newTable.team2_score , 
+				idstadion = newTable.idstadion
+			where id = newTable.id;
+	END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE RULE update_matches_list AS
+    ON UPDATE TO public.match_results
+    DO INSTEAD
+(SELECT update_match_view(old.*, new.*));
+
+CREATE OR REPLACE function public.add_new_match_view(oldTable match_results, newTable match_results)
+RETURNS VOID AS $$
+BEGIN
+	insert into match_schedule(id_team1, id_team2, date_of_match, team1_score, team2_score, idstadion)
+	values(newTable.id_team1, newTable.id_team2, newTable.date_of_match, newTable.team1_score,  newTable.team2_score,  newTable.idstadion);
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE function public.delete_match_view(oldTable match_results)
+RETURNS VOID AS 
+$$
+	BEGIN
+		delete from match_results where match_results.id = oldTable.id;
+	END;
+$$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE RULE update_matches_list AS
+    ON UPDATE TO public.match_results
+    DO INSTEAD
+(SELECT update_match_view(old.*, new.*));
+
+CREATE OR REPLACE VIEW view_stadion 
+(
+SELECT info_about_location.id_stadion,
+    info_about_location.city,
+    info_about_location.capacity,
+    info_about_location.name,
+    ( SELECT count_stadion.count_stadion
+           FROM count_stadion() count_stadion(count_stadion)) AS count_matches
+   FROM info_about_location;
+)
+ 
