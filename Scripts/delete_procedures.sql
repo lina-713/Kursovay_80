@@ -35,3 +35,11 @@ delete from teams where teams.idteam = delete_id
 $BODY$;
 ALTER PROCEDURE public.delete_teams(integer)
     OWNER TO postgres;
+
+CREATE OR REPLACE PROCEDURE public.delete_teams(
+	IN delete_id integer)
+LANGUAGE 'sql'
+AS $BODY$
+delete from teams where teams.idteam = delete_id
+$BODY$;
+
