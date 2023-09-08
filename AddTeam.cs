@@ -38,7 +38,7 @@ namespace Kursovay_80
         private void AddTeams()
         {
             connection.Open();
-            NpgsqlCommand command = new NpgsqlCommand("add_team", connection);
+            NpgsqlCommand command = new NpgsqlCommand("add_new_team", connection);
             try
             {
                 command.CommandType = CommandType.StoredProcedure;
