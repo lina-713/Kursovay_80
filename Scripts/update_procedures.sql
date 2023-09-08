@@ -73,3 +73,19 @@ set name_team = up_name_team,
 $BODY$;
 ALTER PROCEDURE public.update_teams(text, timestamp without time zone, text, text, integer)
     OWNER TO postgres;
+
+CREATE OR REPLACE PROCEDURE public.update_teams(
+	IN up_name_team text,
+	IN up_date timestamp without time zone,
+	IN up_coach_lastname text,
+	IN up_coach_name text,
+	IN up_id integer)
+LANGUAGE 'sql'
+AS $BODY$
+update teams 
+set name_team = up_name_team, 
+	date_of_foundation = up_date,
+	coach_lastname = up_coach_lastname,
+	coach_name = up_coach_name
+	where idteam = up_id
+$BODY$;
