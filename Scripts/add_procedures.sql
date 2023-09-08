@@ -46,3 +46,11 @@ VALUES (newcity, newname, newcapacity);
 $BODY$;
 ALTER PROCEDURE public.add_new_stadion(text, text, integer)
     OWNER TO postgres;
+
+CREATE OR REPLACE PROCEDURE add_new_team(new_name_team text, new_date timestamp without time zone, new_lastname text, new_name text) 
+LANGUAGE 'plpgsql' AS
+$BODY$ 
+BEGIN
+	insert into teams(name_team, date_of_foundation, coach_lastname, coach_name) values(new_name_team, new_date, new_lastname, new_name);
+END;
+$BODY$;
